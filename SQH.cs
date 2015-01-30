@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,7 +58,7 @@ namespace Dell{
             }
             return changedNo;
         }
-
+      
         public void read (string dbPath, string name)
         {
 
@@ -77,6 +76,13 @@ namespace Dell{
             //Console.ReadLine();
 
         }
+        public static SQLiteConnection buildConn()
+        {
+            string dbPath = "Data Source =" + Environment.CurrentDirectory + "/test.db";
+            SQLiteConnection conn = new SQLiteConnection(dbPath);//创建数据库实例，指定文件位置
+            conn.Open();//打开数据库，若文件不存在会自动创建
+            return conn;
+        }
         //从服务器获取数据，查看是否需要更新 
         public static void isNeedUpdate()
         {
@@ -85,17 +91,25 @@ namespace Dell{
             conn.Open();//打开数据库，若文件不存在会自动创建
 
         }
+        public static void ChangeCommand(string cmdText, SQLiteConnection conn)
+        {
+            int changedNo = 0;
+            SQLiteCommand command = new SQLiteCommand(cmdText, conn);
+            changedNo = command.ExecuteNonQuery();
+        }
         //检查上一次是否全部更新完成
         public static int  checkLastUpdate()
         {
-            string dbPath = "Data Source =" + Environment.CurrentDirectory + "/test.db";
             string filePath = null;
-            SQLiteConnection conn = new SQLiteConnection(dbPath);//创建数据库实例，指定文件位置
-            conn.Open();//打开数据库，若文件不存在会自动创建
+            //string dbPath = "Data Source =" + Environment.CurrentDirectory + "/test.db"
+            //SQLiteConnection conn = new SQLiteConnection(dbPath);//创建数据库实例，指定文件位置
+            //conn.Open();//打开数据库，若文件不存在会自动创建
+            SQLiteConnection conn = buildConn();
             string cmdQueryText = "SELECT  * FROM fileUpdate WHERE state<1";
             SQLiteCommand cmdQueryTable = new SQLiteCommand(cmdQueryText, conn);
             //int i = cmdQueryTable.ExecuteNonQuery();
             SQLiteDataReader sdr = cmdQueryTable.ExecuteReader();
+            ChangeCommand(cmdQueryText, conn);
             int i = 0;
             int j = 0;
             while (sdr.Read())
@@ -110,11 +124,12 @@ namespace Dell{
                 else
                     filePath = @"D:\";
                 //写程序时要严格注意语法规则，可以节省不少时间
-                string CmdUpdateText = "UPDATE fileUpdate SET state=1 WHERE filename ="+"'"+filenamestr+"'";
+                string cmdUpdateText = "UPDATE fileUpdate SET state=1 WHERE filename ="+"'"+filenamestr+"'";
                 if (File.Exists(filePath))
                 {
-                    cmdChangeTable = new SQLiteCommand(CmdUpdateText, conn);
-                    j=Convert.ToInt32(cmdChangeTable.ExecuteNonQuery());
+                    //cmdChangeTable = new SQLiteCommand(CmdUpdateText, conn);
+                    //j=cmdChangeTable.ExecuteNonQuery();
+                    ChangeCommand(cmdUpdateText,conn);
                     Console.WriteLine(j);
                 }
                 Console.WriteLine(sdr.GetString(1)+"  "+sdr.GetString(2));
@@ -125,14 +140,16 @@ namespace Dell{
             {
                 Console.WriteLine(i);
                 string cmdDropText = "DROP TABLE fileUsing";
-                SQLiteCommand cmdDropTable;
-                cmdDropTable = new SQLiteCommand(cmdDropText, conn);
-                int u = cmdDropTable.ExecuteNonQuery();
+                //SQLiteCommand cmdDropTable;
+                //cmdDropTable = new SQLiteCommand(cmdDropText, conn);
+                //int u = cmdDropTable.ExecuteNonQuery();
+                ChangeCommand(cmdDropText, conn);
                 initUsingTable();
                 string cmdCopyText = "INSERT INTO fileUsing SELECT * FROM  fileUpdate";
-                SQLiteCommand cmdCopyTable;
-                cmdCopyTable = new SQLiteCommand(cmdCopyText, conn);
-                int q = cmdCopyTable.ExecuteNonQuery();
+                //SQLiteCommand cmdCopyTable;
+                //cmdCopyTable = new SQLiteCommand(cmdCopyText, conn);
+                //int q = cmdCopyTable.ExecuteNonQuery();
+                ChangeCommand(cmdCopyText, conn);
             }
             conn.Close();
             return i;        
@@ -140,24 +157,28 @@ namespace Dell{
        //初始化FileUpdate表
         public static void initUpdateTable()
         {
-            string dbPath = "Data Source =" + Environment.CurrentDirectory + "/test.db";
             string cmdCreteText = "CREATE TABLE IF NOT EXISTS fileUpdate(type varchar(30),url varchar(1000),filename varcharo(30),filepath varchar(1000),state integer)";
-            //string cmdCreteText = "CREATE TABLE IF NOT EXISTS fileUpdate(type varchar(30),url varchar(1000),filename varcharo(30),filepath varchar(1000))";
-            SQLiteConnection conn = new SQLiteConnection(dbPath);//创建数据库实例，指定文件位置
-            conn.Open();//打开数据库，若文件不存在会自动创建
-            SQLiteCommand cmdCreateTable = new SQLiteCommand(cmdCreteText, conn);
-            cmdCreateTable.ExecuteNonQuery();//如果表不存在，创建数据表
+            //string dbPath = "Data Source =" + Environment.CurrentDirectory + "/test.db";            
+            ////string cmdCreteText = "CREATE TABLE IF NOT EXISTS fileUpdate(type varchar(30),url varchar(1000),filename varcharo(30),filepath varchar(1000))";
+            //SQLiteConnection conn = new SQLiteConnection(dbPath);//创建数据库实例，指定文件位置
+            //conn.Open();//打开数据库，若文件不存在会自动创建
+            SQLiteConnection conn = buildConn();
+            //SQLiteCommand cmdCreateTable = new SQLiteCommand(cmdCreteText, conn);
+            //cmdCreateTable.ExecuteNonQuery();//如果表不存在，创建数据表
+            ChangeCommand(cmdCreteText,conn);
             conn.Close();
         }
         //初始化FileUSing表
         public static void initUsingTable()
         {
-            string dbPath = "Data Source =" + Environment.CurrentDirectory + "/test.db";
             string cmdCreteText1 = "CREATE TABLE IF NOT EXISTS fileUsing(type varchar(30),url varchar(1000),filename varcharo(30),filepath varchar(1000),state integer)";
-            SQLiteConnection conn1 = new SQLiteConnection(dbPath);//创建数据库实例，指定文件位置
-            conn1.Open();//打开数据库，若文件不存在会自动创建
-            SQLiteCommand cmdCreateTable1 = new SQLiteCommand(cmdCreteText1, conn1);
-            cmdCreateTable1.ExecuteNonQuery();//如果表不存在，创建数据表
+            //string dbPath = "Data Source =" + Environment.CurrentDirectory + "/test.db";            
+            //SQLiteConnection conn1 = new SQLiteConnection(dbPath);//创建数据库实例，指定文件位置
+            //conn1.Open();//打开数据库，若文件不存在会自动创建
+            SQLiteConnection conn1 = buildConn();
+            //SQLiteCommand cmdCreateTable1 = new SQLiteCommand(cmdCreteText1, conn1);
+            //cmdCreateTable1.ExecuteNonQuery();//如果表不存在，创建数据表
+            ChangeCommand(cmdCreteText1,conn1);
             conn1.Close();
         }
     }
