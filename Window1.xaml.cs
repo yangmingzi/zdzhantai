@@ -22,53 +22,69 @@ namespace zdzhantai
     {
         ObservableCollection<BitmapImage> bmList;
         int index = 0;
-        BackgroundWorker bw = new BackgroundWorker();
 
         public Window1()
         {
             InitializeComponent();
-            
+            //window1_load();
             InitList();
-            //CompositionTarget.Rendering += new EventHandler(CompositionTarget_Rendering);
-            //bw.DoWork += new DoWorkEventHandler(bw_DoWork);
+           
             btn1.Click += new RoutedEventHandler(Button_Click_1);
             btn2.Click += new RoutedEventHandler(Button_Click_2);
             btn3.Click += new RoutedEventHandler(Button_Click_3);
-            btn4.Click += new RoutedEventHandler(Button_Click_4);
         }
 
+        //public void window1_load()
+        //{
+        //    this.WindowState = System.Windows.WindowState.Normal;
+        //    this.WindowStyle = System.Windows.WindowStyle.None;
+        //    this.ResizeMode = System.Windows.ResizeMode.NoResize;
+        //    this.Topmost = true;
+
+        //    this.Left = 0.0;
+        //    this.Top = 0.0;
+        //    this.Width = System.Windows.SystemParameters.PrimaryScreenWidth;
+        //    this.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
+        //    //this.img1.Width=
+        //}
 
         List<string> list = new List<string>();
-      
+        
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             if (index > 0)
             {
                 index--;
-                this.img1.Source = bmList[index];
+                img_show(bmList[index]);
             }
             else
             {
                 index = bmList.Count - 1;
-                this.img1.Source = bmList[index];
-            }
-            //this.img1.Source = bmList[0];
-           
-            
+                img_show(bmList[index]);
+            }            
         }
 
+        public void img_show(BitmapImage img)
+        {
+            this.Background = new ImageBrush(img);
+            
+            //this.img1.Source = img;           
+            //this.img1.Width = this.img1.Source.Width;
+            //this.img1.Height = this.img1.Source.Height;
+            //this.img1.Width = 2000;
+            //this.img1.Height = 1000;
+        }
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             if (index <(bmList.Count))
-            {
-               
-                this.img1.Source = bmList[index];
+            {                            
+                img_show(bmList[index]);
                 index++;
             }
             else
             {
                 index = 0;
-                this.img1.Source = bmList[index];
+                img_show(bmList[index]);
             }
         }
        
@@ -77,31 +93,9 @@ namespace zdzhantai
         {
             this.Close();
         }
-        bool flag = true;
-        private void Button_Click_4(object sender, RoutedEventArgs e)
-        {
-            if (flag == true)
-            {
-                bw.RunWorkerAsync();
-                flag = false;
-                (sender as Button).Content = "End";
-            }
-            else
-            {
-                flag = true;
-                (sender as Button).Content = "Start";
-            }
-        }
-
-        //void bw_DoWork(Object sender, DoWorkEventArgs e)
-        //{
-        //    while (!e.Cancel)
-        //    {
-        //        Button_Click_2(sender, new RoutedEventArgs());
-        //        System.Threading.Thread.Sleep(2000);
-        //        e.Cancel = flag;
-        //    }
-        //}
+      
+      
+       
         public void InitList()
         {
             //list = System.IO.Directory.GetFiles(".../.../Image/").ToList();
@@ -112,32 +106,13 @@ namespace zdzhantai
             {
                 
                 Uri url = new Uri(list[i].Substring(0));
-                //MessageBox.Show(url.ToString());
-                
                 BitmapImage bmImg = new BitmapImage();
                 bmImg.BeginInit();
                 bmImg.UriSource = url;
                 bmImg.EndInit();
-
-                //bmImg.BeginInit();
-                //Uri urd = new Uri("D:/VSPROJECT/zdzhantai/zdzhantai/Image/james1.jpg");
-                //bmImg.UriSource = urd;
-                //bmImg.EndInit();
                 bmList.Add(bmImg);
-                //this.img1.Source = bmImg;
             }
-            //MessageBox.Show(list[0]);
-            //MessageBox.Show(list[1]);
-            //this.img1.Source = bmList[1];
+          
         }
-
-        //void CompositionTarget_Rendering(Object sender, EventArgs e)
-        //{
-        //    this.img1.Source = bmList[index];
-
-        //    //this.img1.Width = this.img1.Source.Width;
-        //    //this.img1.Height = this.img1.Source.Height;
-        //}
-
     }
 }
