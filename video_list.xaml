@@ -2,32 +2,13 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:UserControl1="UserControl1.xaml"
-        Title="Window4" Height="300" Width="300" WindowState="Maximized" >
-    <!--<Grid>-->
-            <!--<ListBox>
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="2"/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
+        Title="Window4" Height="300" Width="300" WindowState="Maximized"  Loaded="Window_Loaded">
+    <Grid Name="grid1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
-                <ListBoxItem>
-                    <MediaElement  Name="media1"  MouseLeftButtonUp="MediaPlayer_MouseLeftButtonUp"  LoadedBehavior="Manual" ScrubbingEnabled="True" />
-                </ListBoxItem>
-                <ListBoxItem>
-                    <MediaElement  Name="media2"  MouseLeftButtonUp="MediaPlayer_MouseLeftButtonUp"  LoadedBehavior="Manual" ScrubbingEnabled="True" />
-                </ListBoxItem>
-                <ListBoxItem>
-                    <MediaElement  Name="media3"  MouseLeftButtonUp="MediaPlayer_MouseLeftButtonUp"  LoadedBehavior="Manual" ScrubbingEnabled="True" />
-                </ListBoxItem>
-                <ListBoxItem>
-                    <MediaElement  Name="media4"  MouseLeftButtonUp="MediaPlayer_MouseLeftButtonUp"  LoadedBehavior="Manual" ScrubbingEnabled="True" />
-                </ListBoxItem>
-            </ListBox>-->
-        <!--<UserControl1 Width="250" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
-    <!--</Grid>-->
-    <ListView Name="listview1">
-        
-    </ListView>
+    </Grid>
     
 </Window>

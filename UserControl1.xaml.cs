@@ -25,43 +25,19 @@ namespace zdzhantai
     public partial class UserControl1 : System.Windows.Controls.UserControl
     {
         private bool fullscreen = false;
+        private string media_source; 
         private DispatcherTimer DoubleClickTimer = new DispatcherTimer();
         ObservableCollection<MediaElement> mediaList;
         public UserControl1()
         {
             InitializeComponent();
-         
-            //this.media.Play();
-            //this.media.Pause();            
         }
 
-        //public static readonly RoutedEvent  MediaClick =
-        //  EventManager.RegisterRoutedEvent("MouseDoubleClick",
-        //   RoutingStrategy.Bubble, typeof(RoutedPropertyChangedEventHandler<DateTime>), typeof(UserControl1));
-
-
-        //protected virtual void MediaPlay()
-        //{
-        //    //RoutedPropertyChangedEventArgs<DateTime> arg =
-        //    //    new RoutedPropertyChangedEventArgs<DateTime>(oldValue, newValue, TimeUpdatedEvent);
-        //    //this.RaiseEvent(arg);
-        //    this.meida.Play();
-            
-        //}
-        //public string getTextValue() { }
-        //public string text {
-        //    get { return (string)this.getTextValue(TextProperty); }
-        //    set { this.SetValue(TextProperty, value); }
-        //}
-        //public string mediaSource { }
         private void MediaPlayer_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             Window5 win = new Window5();
-            win.media5.Source = this.media.Source;
-           
+            win.media5.Source = this.media.Source;           
             win.Show();
-            win.media5.Play();
-            win.media5.Pause();
         }
       
     }

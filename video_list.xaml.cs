@@ -15,6 +15,7 @@ using System.Windows.Threading;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Windows.Forms;
+using System.Timers;
 
 namespace zdzhantai
 {
@@ -27,52 +28,35 @@ namespace zdzhantai
         private DispatcherTimer DoubleClickTimer = new DispatcherTimer();
         ObservableCollection<MediaElement> mediaList;
         ObservableCollection<UserControl1> us_array;
+        List<string> mList = new List<string>();
+     
+        Random random = new Random();  
         public Window4()
         {
-            InitializeComponent();
-            //this.listview1.View = ViewBase.Equals();
-            //UserControl1 us11 = new UserControl1();
-            //UserControl1 usl2 = new UserControl1();
-            //UserControl1 usl3 = new UserControl1();
-            //UserControl1 us14 = new UserControl1();
-            //this.listview1.View = (System.Windows.Controls.ViewBase)View.LargeIcon;
-            //this.Content = us1;
-            //this.listview1.View = View.LargeIcon;
-            //this.listview1.LargeImageList = 
-            //this.listview1.BeginInit();
-            //for (int i = 0; i < 10; i++)
-            //{
+            InitializeComponent();        
+            
+        }
 
-            //this.listview1.Items.Add(us11);
-            //this.listview1.Items.Add(usl2);
-            //this.listview1.Items.Add(usl3);
-            //this.listview1.Items.Add(us14);
-            //}
-            //this.listview1.EndInit();
-            //us11.media.Play();        
-            //usl2.media.Play();
-            //usl3.media.Play();           
-            //us14.media.Play();
-          
-            //InitMediaList();
-            // Uri url1 = new Uri(mList[0].Substring(0));
-            //this.media5.Source = url1;
-            //this.media5 = mediaList[0];
-            //this.media1.Source = (new Uri(mList[0].Substring(0)));
-            //this.media2.Source = (new Uri(mList[1].Substring(0)));
-            //this.media3.Source = (new Uri(mList[2].Substring(0)));
-            //this.media1.Play();
-
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
             InitUsList();
-            int j = us_array.Count();
-            for (int i = 0; i < j; i++)
+            int video_num = mList.Count();
+            for (int i = 0; i < video_num; i++)
             {
-                this.listview1.Items.Add(us_array[i]);
+                int row = i / 2;
+                int col = i % 2;
+                if (col == 0)
+                { 
+                    RowDefinition row1 = new RowDefinition();
+                    grid1.RowDefinitions.Add(row1);
+                }               
+                Grid.SetRow(us_array[i],row);
+                Grid.SetColumn(us_array[i],col);
+                grid1.Children.Add(us_array[i]);
                 us_array[i].media.Play();
+
                 us_array[i].media.Pause();
             }
-            
-            
         }
 
         private void MediaPlayer_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -106,12 +90,12 @@ namespace zdzhantai
         [DllImport("user32.dll")]
         private static extern uint GetDoubleClickTime();
 
-        List<string> mList = new List<string>();
+       
         private void InitUsList()
         {
             mList = System.IO.Directory.GetFiles("D:/VSPROJECT/zdzhantai/zdzhantai/Video/").ToList();
 
-            us_array = new ObservableCollection<UserControl1>();
+            us_array = new ObservableCollection<UserControl1>();//必须先初始化
             for (int i = 0; i < mList.Count; i++)
             {
                 Uri url = new Uri(mList[i].Substring(0));
