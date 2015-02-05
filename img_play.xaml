@@ -1,0 +1,97 @@
+﻿<Window x:Class="zdzhantai.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Window1" Height="300" Width="300" AllowsTransparency="True" WindowState="Maximized" WindowStyle="None">
+    <Window.Resources>
+        <Style x:Key="playLastButtonTemplate" TargetType="Button" >
+            <!--修改模板属性-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <!--控件模板-->
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <!--按钮呈圆形-->
+                            <Ellipse x:Name="outerCircle"   Width="28" Height="28">
+                            </Ellipse>
+                            <!--按钮内容-->
+                            <Border Name="border"  >
+                                <Image  Name="playImage" Height="25" Source="lastpage.png" ></Image>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="playNextButtonTemplate" TargetType="Button" >
+            <!--修改模板属性-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <!--控件模板-->
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <!--按钮呈圆形-->
+                            <Ellipse x:Name="outerCircle"   Width="28" Height="28">
+                            </Ellipse>
+                            <!--按钮内容-->
+                            <Border Name="border"  >
+                                <Image  Name="playImage" Height="25" Source="nextpage.png" ></Image>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="playExitButtonTemplate" TargetType="Button" >
+            <!--修改模板属性-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <!--控件模板-->
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <!--按钮呈圆形-->
+                            <Ellipse x:Name="outerCircle"   Width="28" Height="28">
+                            </Ellipse>
+                            <!--按钮内容-->
+                            <Border Name="border"  >
+                                <Image  Name="playImage" Height="25" Source="exit.png" ></Image>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Window.Background>
+        <ImageBrush  ImageSource="D:/VSPROJECT/zdzhantai/zdzhantai/Image/Desert.jpg"  />
+    </Window.Background>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="133*"/>
+            <ColumnDefinition Width="6*"/>
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="114*"/>
+            <RowDefinition Height="57*"/>
+            <RowDefinition Height="67*"/>
+            <RowDefinition Height="32*"/>
+        </Grid.RowDefinitions>
+        <TextBlock ><Run Language="zh-cn" Text="BigThreeJames"/></TextBlock>
+
+        <Button  Name="btn2"  Style="{StaticResource playLastButtonTemplate}"  Grid.Row="1" Grid.Column="0" Content="前一张"  Click="Button_Click_2" >
+            <!--<Button.Background>
+                <ImageBrush ImageSource="james1.jpg" Stretch="Fill"/>
+            </Button.Background>-->
+        </Button>
+
+        <Button  Name="btn1"  Style="{StaticResource playNextButtonTemplate}"  Grid.Row="1" Grid.Column="2" Content="后一张" Click="Button_Click_1"/>
+            
+        <!--<Image  Name="img1"  Grid.Row="0" Grid.Column="1" Grid.RowSpan="3"  />-->
+        <Button Name="btn3" Style="{StaticResource playExitButtonTemplate}" Grid.Row="3" Grid.Column="0" Content="Button" Click="Button_Click_3" />
+        <TextBlock  Name="text1" Text="好风景" Grid.Row="3"  Grid.Column="1"  Grid.ColumnSpan="2" Foreground="White" FontSize="60" />
+        <!--<TextBlock Grid.Column="2"  Grid.Row="3" TextWrapping="Wrap" Text="TextBlock" />-->
+    </Grid>
+</Window>
