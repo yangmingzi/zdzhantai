@@ -4,4 +4,11 @@
 #2015年2月1日 
 更新将图片设置为窗口背景，设置Button的Style，轮播，Grid布局
 #2015年2月5日
- 更新自定义控件UserControl1，MediaElement+TextBlock,点击播放视频以及2*n的Grid动态布局
+ (1)更新自定义控件UserControl1，MediaElement+TextBlock,点击播放视频
+ (2)2*n的Grid动态布局
+#2015年2月6日
+(1)更新将数据库部分和界面部分程序合并
+(2)将数据库部分拆分成三个类：操作类SQH，更新类updateSq,初始化类initSqlite。
+(3)加入了可追溯部分，从串口读取防伪码。
+(4)将文件的绝对路径改为相对路径。
+(5)删除以前程序中的无用函数和测试函数。
