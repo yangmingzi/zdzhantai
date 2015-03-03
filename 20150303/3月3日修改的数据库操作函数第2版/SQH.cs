@@ -23,7 +23,7 @@ namespace Dell{
         private SQLiteConnection connection = null;
 
         public Ops() { }
-       
+       //重载构造函数
         public  Ops(string dbPath)
         {
             initCon(dbPath);
@@ -34,18 +34,19 @@ namespace Dell{
             }
         }
 
-        //建立connection      
+        //建立connection ,并返回链接     
         public static SQLiteConnection buildConn()
         {
             SQLiteConnection conn = new SQLiteConnection(dbPath);//创建数据库实例，指定文件位置
             conn.Open();//打开数据库，若文件不存在会自动创建
             return conn;
         }
-
+        //建立connection,不打开
         public  void initCon(string dbPath)
         {
             connection = new SQLiteConnection(dbPath);
         }
+        //判断连接状态
         private Boolean judgeConn()
         {
             Boolean isOpen = true;
