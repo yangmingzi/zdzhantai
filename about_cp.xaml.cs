@@ -12,44 +12,31 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace zdzhantai
 {
     /// <summary>
-    /// Window1.xaml 的交互逻辑
+    /// about_cp.xaml 的交互逻辑
     /// </summary>
-    public partial class img_play : Window
+    public partial class about_cp : Window
     {
         ObservableCollection<BitmapImage> bmList;
         int index = 0;
-
-        public img_play()
+        public about_cp()
         {
             InitializeComponent();
-            //window1_load();
             InitList();
-           
             btn1.Click += new RoutedEventHandler(Button_Click_1);
             btn2.Click += new RoutedEventHandler(Button_Click_2);
             btn3.Click += new RoutedEventHandler(Button_Click_3);
         }
 
-        //public void window1_load()
-        //{
-        //    this.WindowState = System.Windows.WindowState.Normal;
-        //    this.WindowStyle = System.Windows.WindowStyle.None;
-        //    this.ResizeMode = System.Windows.ResizeMode.NoResize;
-        //    this.Topmost = true;
-
-        //    this.Left = 0.0;
-        //    this.Top = 0.0;
-        //    this.Width = System.Windows.SystemParameters.PrimaryScreenWidth;
-        //    this.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
-        //    //this.img1.Width=
-        //}
 
         List<string> list = new List<string>();
-        
+
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             if (index > 0)
@@ -61,7 +48,7 @@ namespace zdzhantai
             {
                 index = bmList.Count - 1;
                 img_show(bmList[index]);
-            }            
+            }
         }
 
         public void img_show(BitmapImage img)
@@ -70,8 +57,8 @@ namespace zdzhantai
         }
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            if (index <(bmList.Count))
-            {                            
+            if (index < (bmList.Count))
+            {
                 img_show(bmList[index]);
                 index++;
             }
@@ -81,26 +68,25 @@ namespace zdzhantai
                 img_show(bmList[index]);
             }
         }
-       
+
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-      
-      
-       
+
+
+
         public void InitList()
         {
             //list = System.IO.Directory.GetFiles(".../.../Image/").ToList();
-            //list = System.IO.Directory.GetFiles("D:/VSPROJECT/zdzhantai/zdzhantai/Image/").ToList();
-            string mulu = Environment.CurrentDirectory.ToString() + "/Image";
+            string mulu = Environment.CurrentDirectory.ToString() + "/zdimg";
             list = System.IO.Directory.GetFiles(mulu).ToList();
 
             bmList = new ObservableCollection<BitmapImage>();
             for (int i = 0; i < list.Count; i++)
             {
-                
+
                 Uri url = new Uri(list[i].Substring(0));
                 BitmapImage bmImg = new BitmapImage();
                 bmImg.BeginInit();
@@ -108,7 +94,7 @@ namespace zdzhantai
                 bmImg.EndInit();
                 bmList.Add(bmImg);
             }
-          
+
         }
     }
 }
