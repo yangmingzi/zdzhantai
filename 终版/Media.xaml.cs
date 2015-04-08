@@ -80,23 +80,26 @@ namespace zdzhantai
             }         
         }
 
-        public void playMediaList()
-        {
-            for (int i = 0; i <mediaList.Count(); i++)
-            {
-                //if(i==mediaList.Count())
-                //{
-                //    playMediaList();
-                //}
-                this.Media1 = mediaList[i];
-                //this.Media1.Position = new TimeSpan(0);               
-                this.Media1.LoadedBehavior = MediaState.Manual;
-                this.Media1.Play(); 
+        //public void playMediaList()
+        //{
+        //    for (int i = 0; i <mediaList.Count(); i++)
+        //    {
+        //        //if(i==mediaList.Count())
+        //        //{
+        //        //    playMediaList();
+        //        //}
+        //        this.Media1 = mediaList[i];
+        //        //this.Media1.Position = new TimeSpan(0);               
+        //        this.Media1.LoadedBehavior = MediaState.Manual;
+        //        this.Media1.Play(); 
                 
-            }
-        }
+        //    }
+        //}
         private void MediaEnd(object sender, RoutedEventArgs e)
         {
+            //注意此处循环逻辑。在上文一开始就将meNum置0，然后播放
+            //然后加1，当第一次播放结束是触发这个函数
+            //先播放，在改meNum值
             playSureMedia(meNum);
             if (meNum == uriList.Count()-1) { meNum = 0; }
             else{
