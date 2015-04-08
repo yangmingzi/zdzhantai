@@ -1,0 +1,72 @@
+﻿<Window x:Class="zdzhantai.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow"  Height="400" Width="400" WindowState="Maximized"  WindowStyle="None"  MouseRightButtonDown="rightButtonClick">
+    <Window.Background>
+        <ImageBrush  ImageSource="yellowblack.jpg"  />
+    </Window.Background>
+    <Window.Resources>
+        <Style x:Key="play_video_button" TargetType="Button" >
+            <!--修改模板属性-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <!--控件模板-->
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <!--按钮呈圆形-->
+                            <Ellipse x:Name="outerCircle"   Width="1" Height="1">
+                            </Ellipse>
+                            <!--按钮内容-->
+                            <Border Name="border"  >
+                                <Image  Name="playImage" Height="500" Source="icon.jpg" ></Image>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="playExitButtonTemplate" TargetType="Button" >
+            <!--修改模板属性-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <!--控件模板-->
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <!--按钮呈圆形-->
+                            <Ellipse x:Name="outerCircle"   Width="28" Height="28">
+                            </Ellipse>
+                            <!--按钮内容-->
+                            <Border Name="border"  >
+                                <Image  Name="playImage" Height="25" Source="exit.png" ></Image>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <!--<Grid Height="320" VerticalAlignment="Bottom" RenderTransformOrigin="0.491,0.481">-->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40*"/>
+            <ColumnDefinition Width="116*"/>
+            <ColumnDefinition Width="79*"/>
+            <ColumnDefinition Width="121*"/>
+            <ColumnDefinition Width="36*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32*"/>
+            <RowDefinition Height="130*"/>
+            <RowDefinition Height="38*"/>
+            <RowDefinition Height="125*"/>
+            <RowDefinition Height="45*"/>
+        </Grid.RowDefinitions>
+        <Button Content="追溯信息"   Grid.Column="1" Grid.Row="1"  Click="Button_Click_trace"  Style="{StaticResource play_video_button}"/>
+        <Button Content="安全鸡蛋"   Grid.Column="3" Grid.Row="3"  Click="Button_Click_image"  Style="{StaticResource play_video_button}"/>
+        <Button Content="关于正大"   Grid.Column="3" Grid.Row="1"  Click="Button_Click_aboutZd"      Style="{StaticResource play_video_button}"/>
+        <Button Name="btn3" Style="{StaticResource playExitButtonTemplate}" Grid.Row="0" Grid.Column="4" Content="Button" Click="Button_Click_Close"  />
+        <Label Content="正大鸡蛋追溯客户端"   Foreground="WhiteSmoke" FontSize="40"  FontFamily="Segoe UI"  Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" Grid.ColumnSpan="3"  />
+        <!--<Button Content="配置页面" Grid.Row="3"   Style="{StaticResource play_video_button}" Grid.ColumnSpan="2" Margin="35,0,0,0" Click="seting_button_click"/>-->
+    </Grid>
+</Window>
