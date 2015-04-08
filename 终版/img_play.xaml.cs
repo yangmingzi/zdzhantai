@@ -34,10 +34,13 @@ namespace zdzhantai
         public TouchPoint leave;
         public void changeIndex(String newIndex)
         {
-            mulu = newIndex;
-            //InitList();
+            mulu = newIndex;           
             InitListFromTable(newIndex);
-            //InitListFromFolder(newIndex);
+        }
+        public void changeIndex1(String newIndex)
+        {
+            mulu = newIndex;
+            InitListFromFolder();
         }
         public img_play()
         {
@@ -149,18 +152,18 @@ namespace zdzhantai
         }
 
 
-        public  void InitListFromTable(string tableName)
-        { 
+        public void InitListFromTable(string tableName)
+        {
             Ops op = new Ops(dbPath);
             string cmdQueryFront = "SELECT * FROM ";
-            string cmdQueryBack = " WHERE state=1";
+            string cmdQueryBack = " WHERE state=1";//注意，WHERE前面有一个空格，否则语句格式不对
             string cmdQuery = cmdQueryFront + tableName + cmdQueryBack;
             SQLiteDataReader sdr = op.noChangeCommand(cmdQuery);
             List<string> list = new List<string>();
-            
+
             while (sdr.Read())
             {
-                int i1 = sdr.GetInt32(2);
+                //int i1 = sdr.GetInt32(2);
                 string s2 = sdr.GetString(3);
                 list.Add(s2);
             }
@@ -180,17 +183,15 @@ namespace zdzhantai
         public void InitListFromFolder()
         {
             list = System.IO.Directory.GetFiles(mulu).ToList();
-
-            bmList1 = new ObservableCollection<BitmapImage>();
+            bmList = new ObservableCollection<BitmapImage>();
             for (int i = 0; i < list.Count; i++)
-            {
-                
+            {                
                 Uri url = new Uri(list[i].Substring(0));
                 BitmapImage bmImg = new BitmapImage();
                 bmImg.BeginInit();
                 bmImg.UriSource = url;
                 bmImg.EndInit();
-                bmList1.Add(bmImg);
+                bmList.Add(bmImg);
             }         
         }          
     }

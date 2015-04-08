@@ -38,13 +38,13 @@ namespace zdzhantai
             string filePath;
             //Ops Op = bulidOp();
             //// 数组  【】    对象{}     值“”
-            //string json1 = "{type:'image',url:'http://i1.hoopchina.com.cn/blogfile/201501/08/BbsImg142070525332424_550*550.jpg'}";
+            string json1 = "{type:'image',url:'http://i1.hoopchina.com.cn/blogfile/201501/08/BbsImg142070525332424_550*550.jpg'}";
             //string json2 = "{type:'video',url:'http://i2.hoopchina.com.cn/blogfile/201411/27/BbsImg141707487288557_1271*988.jpg'}";
-            ////string json2 = "{type:'image',url:'http://v.youku.com/v_show/id_XODczMTA2OTc2.html'}";
-            //string json3 = "{type:'image',url:'http://i1.hoopchina.com.cn/blogfile/201304/09/136548593327743.jpg'}";
-            //string jsonString = "[" + json1 + "," + json2 + "," + json3 + "]";
+            string json2 = "{type:'image',url:'http://p0.qhimg.com/dmsmty/70_70_100/t0152c6ddbb22a37797.png'}";
+            string json3 = "{type:'image',url:'http://i1.hoopchina.com.cn/blogfile/201304/09/136548593327743.jpg'}";
+            string jsonString = "[" + json1 + "," + json2 + "," + json3 + "]";
 
-            string jsonString = myfile.readname();
+           // string jsonString = myfile.readname();
             StringBuilder sb = new StringBuilder();
             JArray array1 = (JArray)JsonConvert.DeserializeObject(jsonString);
             int le = array1.ToArray().Length;      
@@ -52,14 +52,21 @@ namespace zdzhantai
             {
                 WebClient mywebclient = new WebClient();
                 JObject jo = (JObject)array1[i];
-                string frontUrl = "http://10.108.158.5:8080/cpServerPro";
-                string backUrl = jo["url"].ToString();               
-                string url = frontUrl + backUrl;
+                //string frontUrl = "http://10.108.158.5:8080/cpServerPro";
+                //string backUrl = jo["url"].ToString();               
+                //string url = frontUrl + backUrl;
+                //string newfilename = backUrl;
+
                 //Boolean b = backUrl.Equals("");
-                //if (b) { continue; }             
-                if (backUrl.Equals("")) { continue; }
+                //if (b) { continue; } 
+
+                string url = jo["url"].ToString();
+                Boolean isHave = urlSearch(url);
+                if (isHave) { continue; }
+
+                //if (backUrl.Equals("")) { continue; }
                 string newfilename = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString()
-                    + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString() + i+ ".jpg";
+                    + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString() + i + ".jpg";
                 //下载很快，如果不在文件名加入i的话，会在一秒内下载完，使用时间当做文件名，最后就只剩一个文件。
                 //string filePath = @"D:\VSPROJECT\WindowsFormsApplication3\" + newfilename;
                 if (jo["type"].ToString().Equals("image"))
@@ -105,7 +112,15 @@ namespace zdzhantai
             else
                 return true;
         }
-
+        //
+        public static  Boolean urlSearch(string url)
+        {
+            string cmdSRfront = "SELECT * From fileUsing WHERE url=";
+            string cmdSr = cmdSRfront + "'" + url + "'";
+            SQLiteDataReader sdrSearch = Op.noChangeCommand(cmdSr);
+            Boolean b = sdrSearch.Read();
+            return b;
+        }
         public static int checkLastUpdate()
         {
             //Ops Op = bulidOp();
